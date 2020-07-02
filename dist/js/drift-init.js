@@ -6,7 +6,20 @@
  * http://link-to-your-git-repo.com
  */
 
+document.documentElement.style.setProperty('--drift-button', drift_button_settings.drift_color);
+var driftIsLoaded = false;
+
+if (driftIsLoaded === false) {
+  // load after waiting 5000 milliseconds, 5 seconds
+  setTimeout((function(){ 
+    LoadDriftWidget();
+    driftIsLoaded = true;
+  }), 5000);
+}
+
 function LoadDriftWidget() {
+  driftIsLoaded = true;
+
   var t = window.driftt = window.drift = window.driftt || [];
   if (!t.init) {
     if (t.invoked) {
@@ -30,22 +43,20 @@ function LoadDriftWidget() {
   }
   drift.SNIPPET_VERSION = '0.3.1';
   drift.load(drift_settings.drift_key);
+  drift.config({
+    backgroundColor: drift_button_settings.drift_color
+  });
 
-  // drift.on('ready', function(api, payload) {
-  // api.sidebar.open();
-  // });
+  drift.on('ready', (function(api, payload) {
+    setTimeout((function(){ 
+      var button = document.getElementById('drift-init');
+        button.parentNode.removeChild(button);
+    }), 5000);
+  }));
 };
 
-
-if (drift_settings.drift_method === 'delay') {
-  //load after waiting 5000 milliseconds, 5 seconds
-  setTimeout((function(){ 
-    LoadDriftWidget();
-  }), 5000);
-}
-
-if (drift_settings.drift_method === 'scroll') {
-  window.addEventListener('scroll', (function(e) {
-    LoadDriftWidget();
+function openDriftWidget() {
+  drift.on('ready', (function(api, payload) {
+    api.sidebar.open();
   }));
-}
+};

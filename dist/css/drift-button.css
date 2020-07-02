@@ -1,0 +1,17 @@
+/*!
+ * project-name v0.0.1
+ * A description for your project.
+ * (c) 2020 YOUR NAME
+ * MIT License
+ * http://link-to-your-git-repo.com
+ */
+
+/* line 1, src/sass/drift-button.scss */
+.drift-init {
+  position: fixed;
+  right: 36px;
+  bottom: 36px;
+  padding: 16px;
+  background-color: var(--drift-button) !important;
+  border-radius: 5px;
+}

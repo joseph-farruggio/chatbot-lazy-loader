@@ -9,6 +9,7 @@
 /* line 1, src/sass/drift-button.scss */
 .drift-init {
   position: fixed;
+  z-index: 99;
   right: 36px;
   bottom: 36px;
   padding: 16px;
@@ -17,4 +18,5 @@
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
+  cursor: pointer;
 }

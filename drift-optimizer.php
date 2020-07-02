@@ -20,7 +20,7 @@ add_action( 'carbon_fields_register_fields', 'crb_attach_theme_options' );
 function crb_attach_theme_options() {
   Container::make( 'theme_options', __( 'Drift Settings' ) )
       ->add_fields( array(
-          Field::make( 'text', 'drift_key', 'Drift Key' ),
+          Field::make( 'text', 'drift_key', 'Drift Key' )->set_required( true ),
           // Field::make( 'select', 'drift_method', __( 'Drift load options' ) )
           //   ->set_options( array(
           //       'delay' => 'Load after 5 seconds',
@@ -36,7 +36,7 @@ function crb_attach_theme_options() {
           //           'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
           //       )
           // ) ),
-          Field::make( 'color', 'drift_button_color', 'Button Color' )
+          Field::make( 'color', 'drift_button_color', 'Button Color' )->set_required( true )
       ) );
 }
 

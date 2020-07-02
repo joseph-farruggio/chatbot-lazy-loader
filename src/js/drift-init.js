@@ -1,4 +1,4 @@
-document.documentElement.style.setProperty('--drift-button', drift_button_settings.drift_color);
+document.documentElement.style.setProperty('--drift-button', drift_settings.drift_color);
 var driftIsLoaded = false;
 
 if (driftIsLoaded === false) {
@@ -36,7 +36,7 @@ function LoadDriftWidget() {
   drift.SNIPPET_VERSION = '0.3.1';
   drift.load(drift_settings.drift_key);
   drift.config({
-    backgroundColor: drift_button_settings.drift_color
+    backgroundColor: drift_settings.drift_color
   });
 
   drift.on('ready', function(api, payload) {

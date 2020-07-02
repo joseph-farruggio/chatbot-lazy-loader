@@ -48,26 +48,18 @@ function crb_load() {
 
 if ( get_option('_drift_key') != null ) {
 	function optimize_drift_enqueue_script() {   	
+    wp_enqueue_style( 'drift-button', plugin_dir_url( __FILE__ ) . 'dist/css/drift-button.min.css');
+
 		wp_enqueue_script( 'optimized_drift', plugin_dir_url( __FILE__ ) . 'dist/js/drift-init.min.js', array(), null, true);
 		wp_localize_script( 'optimized_drift', 'drift_settings', array(
 			'drift_key' => get_option('_drift_key'),
-			'drift_method' => get_option('_drift_method'),
+			'drift_color' => get_option('_drift_button_color'),
 		) );
 	}
   add_action('wp_enqueue_scripts', 'optimize_drift_enqueue_script');
 }
 
-function optimize_drift_enqueue_style() {   	
-  wp_enqueue_style( 'drift-button', plugin_dir_url( __FILE__ ) . 'dist/css/drift-button.min.css');
-  
-  wp_localize_script( 'optimized_drift', 'drift_button_settings', array(
-    'drift_color' => get_option('_drift_button_color'),
-  ) );
-}
-add_action('wp_enqueue_scripts', 'optimize_drift_enqueue_style');
-
 function insert_my_footer() {
   echo '<button onmouseenter="LoadDriftWidget()" onClick="openDriftWidget()" id="drift-init" class="drift-init"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4.583 14.894l-3.256 3.78c-.7.813-1.26.598-1.25-.46a10689.413 10689.413 0 0 1 .035-4.775V4.816a3.89 3.89 0 0 1 3.88-3.89h12.064a3.885 3.885 0 0 1 3.882 3.89v6.185a3.89 3.89 0 0 1-3.882 3.89H4.583z" fill="#FFF" fill-rule="evenodd"></path></svg></button>';
 }
-
 add_action('wp_footer', 'insert_my_footer');

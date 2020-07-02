@@ -29,6 +29,11 @@
 }
 
 /* line 15, src/sass/messenger-button.scss */
+#messenger-button:focus {
+  outline: none;
+}
+
+/* line 19, src/sass/messenger-button.scss */
 #messenger-button svg {
   width: 60px;
   height: 60px;

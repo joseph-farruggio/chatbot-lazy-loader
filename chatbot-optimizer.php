@@ -45,7 +45,21 @@ function crb_attach_theme_options() {
             )
           )),
 
-          Field::make( 'text', 'messenger_id', 'Messenger ID' )->set_required( true )->set_conditional_logic( array(
+          Field::make( 'text', 'messenger_id', 'Facebook Page ID' )->set_required( true )->set_conditional_logic( array(
+            'relation' => 'AND', // Optional, defaults to "AND"
+            array(
+              'field' => 'chat_provider',
+              'value' => 'messenger', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+              'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+            )
+          )),
+          
+          Field::make( 'html', 'crb_information_text' )
+          ->set_html( '
+            <h2 style="padding-left: 0;">Instructions</h2>
+            <p>First you need to enable the Messenger chat plugin. From your Facebook page:</p> <ol><li>Go to Page Settings > Messaging</li><li>Click "Add Messenger to your website"</li><li>White list your domain, but don&apos;t worry about copying the JavaScript code</li></ol>
+            <p>Next you need to copy your Facebook page ID. If you need help finding it, you can use this tool: <a href="https://findmyfbid.com/" target="_blank">findmyfbid.com</a>' )
+          ->set_conditional_logic( array(
             'relation' => 'AND', // Optional, defaults to "AND"
             array(
               'field' => 'chat_provider',

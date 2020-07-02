@@ -1,16 +1,17 @@
-document.documentElement.style.setProperty('--drift-button', drift_settings.drift_color);
-var driftIsLoaded = false;
+document.documentElement.style.setProperty('--chat-button', drift_settings.button_color);
 
-if (driftIsLoaded === false) {
+var chatIsLoaded = false;
+
+if (chatIsLoaded === false) {
   // load after waiting 5000 milliseconds, 5 seconds
   setTimeout(function(){ 
-    LoadDriftWidget();
-    driftIsLoaded = true;
+    LoadChatWidget();
+    chatIsLoaded = true;
   }, 5000);
 }
 
-function LoadDriftWidget() {
-  driftIsLoaded = true;
+function LoadChatWidget() {
+  chatIsLoaded = true;
 
   var t = window.driftt = window.drift = window.driftt || [];
   if (!t.init) {
@@ -40,10 +41,8 @@ function LoadDriftWidget() {
   });
 
   drift.on('ready', function(api, payload) {
-    setTimeout(function(){ 
-      var button = document.getElementById('drift-init');
-        button.parentNode.removeChild(button);
-    }, 5000);
+    var button = document.getElementById('drift-init');
+    button.parentNode.removeChild(button);
   });
 };
 

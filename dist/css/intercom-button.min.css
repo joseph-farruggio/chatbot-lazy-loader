@@ -1,0 +1,8 @@
+/*! project-name v0.0.1 | (c) 2020 YOUR NAME | MIT License | http://link-to-your-git-repo.com */
+/*!
+ * project-name v0.0.1
+ * A description for your project.
+ * (c) 2020 YOUR NAME
+ * MIT License
+ * http://link-to-your-git-repo.com
+ */#intercom-button{position:fixed;z-index:99;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:var(--chat-button);cursor:pointer;-webkit-box-shadow:0 1px 6px 0 rgba(0,0,0,.06),0 2px 32px 0 rgba(0,0,0,.16);box-shadow:0 1px 6px 0 rgba(0,0,0,.06),0 2px 32px 0 rgba(0,0,0,.16);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;padding:0}#intercom-button svg{width:28px;height:32px;fill:#fff}

@@ -1,7 +1,7 @@
 {
-	"name": "project-name",
+	"name": "chatbot-optimizer",
 	"version": "0.0.1",
-	"description": "A description for your project.",
+	"description": "Eliminate the impact of chatbots on your page speed",
 	"main": "./dist/your-main-js-file.js",
 	"author": {
 		"name": "YOUR NAME",

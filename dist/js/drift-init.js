@@ -45,7 +45,7 @@ function LoadChatWidget() {
   drift.SNIPPET_VERSION = '0.3.1';
   drift.load(drift_settings.drift_key);
   drift.config({
-    backgroundColor: drift_settings.drift_color
+    backgroundColor: drift_settings.button_color
   });
 
   drift.on('ready', (function(api, payload) {
@@ -54,7 +54,7 @@ function LoadChatWidget() {
   }));
 };
 
-function openDriftWidget() {
+function OpenChatWidget() {
   drift.on('ready', (function(api, payload) {
     api.sidebar.open();
   }));

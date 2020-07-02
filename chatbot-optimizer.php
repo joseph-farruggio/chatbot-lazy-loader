@@ -18,12 +18,13 @@ use Carbon_Fields\Field;
 
 add_action( 'carbon_fields_register_fields', 'crb_attach_theme_options' );
 function crb_attach_theme_options() {
-  Container::make( 'theme_options', __( 'Drift Settings' ) )
+  Container::make( 'theme_options', __( 'Chat Settings' ) )
       ->add_fields( array(
           Field::make( 'select', 'chat_provider', __( 'Choose a chat provider' ) )
             ->set_options( array(
                 'drift' => 'Drift',
                 'intercom' => 'Intercom',
+                'messenger' => 'Messenger'
             ) ),
           
           Field::make( 'text', 'drift_key', 'Drift Key' )->set_required( true )->set_conditional_logic( array(
@@ -40,6 +41,15 @@ function crb_attach_theme_options() {
             array(
               'field' => 'chat_provider',
               'value' => 'intercom', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+              'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+            )
+          )),
+
+          Field::make( 'text', 'messenger_id', 'Messenger ID' )->set_required( true )->set_conditional_logic( array(
+            'relation' => 'AND', // Optional, defaults to "AND"
+            array(
+              'field' => 'chat_provider',
+              'value' => 'messenger', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
               'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
             )
           )),
@@ -83,12 +93,11 @@ if ( get_option('_chat_provider') === 'drift' ) {
   }
   
   function insert_my_footer() {
-    echo '<button onmouseenter="LoadChatWidget()" onClick="openChatWidget()" id="drift-init" class="drift-init"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4.583 14.894l-3.256 3.78c-.7.813-1.26.598-1.25-.46a10689.413 10689.413 0 0 1 .035-4.775V4.816a3.89 3.89 0 0 1 3.88-3.89h12.064a3.885 3.885 0 0 1 3.882 3.89v6.185a3.89 3.89 0 0 1-3.882 3.89H4.583z" fill="#FFF" fill-rule="evenodd"></path></svg></button>';
+    echo '<button onmouseenter="LoadChatWidget()" onClick="OpenChatWidget()" id="drift-init" class="drift-init"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4.583 14.894l-3.256 3.78c-.7.813-1.26.598-1.25-.46a10689.413 10689.413 0 0 1 .035-4.775V4.816a3.89 3.89 0 0 1 3.88-3.89h12.064a3.885 3.885 0 0 1 3.882 3.89v6.185a3.89 3.89 0 0 1-3.882 3.89H4.583z" fill="#FFF" fill-rule="evenodd"></path></svg></button>';
   }
   add_action('wp_footer', 'insert_my_footer');
 
 }
-
 
 // Intercom selected
 if ( get_option('_chat_provider') === 'intercom' ) {
@@ -105,6 +114,23 @@ if ( get_option('_chat_provider') === 'intercom' ) {
 
     function insert_my_footer() {
       echo '<button onmouseenter="LoadChatWidget()" id="intercom-button" class="intercom-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32"><path d="M28 32s-4.714-1.855-8.527-3.34H3.437C1.54 28.66 0 27.026 0 25.013V3.644C0 1.633 1.54 0 3.437 0h21.125c1.898 0 3.437 1.632 3.437 3.645v18.404H28V32zm-4.139-11.982a.88.88 0 00-1.292-.105c-.03.026-3.015 2.681-8.57 2.681-5.486 0-8.517-2.636-8.571-2.684a.88.88 0 00-1.29.107 1.01 1.01 0 00-.219.708.992.992 0 00.318.664c.142.128 3.537 3.15 9.762 3.15 6.226 0 9.621-3.022 9.763-3.15a.992.992 0 00.317-.664 1.01 1.01 0 00-.218-.707z"></path></svg></button>';
+    }
+    add_action('wp_footer', 'insert_my_footer');
+  }
+}
+
+// Messenger selected
+if ( get_option('_chat_provider') === 'messenger' ) {
+  if ( get_option('_messenger_id') != null ) {
+    function optimize_messenger_enqueue_script() {   	
+      wp_enqueue_script( 'optimized_messenger', plugin_dir_url( __FILE__ ) . 'dist/js/messenger-init.min.js', array(), null, true);
+    }
+    add_action('wp_enqueue_scripts', 'optimize_messenger_enqueue_script');
+
+    function insert_my_footer() {
+      echo "<div id='fb-root'></div>";
+      echo "<div class='fb-customerchat' attribution=setup_tool page_id='". get_option('_messenger_id') ."'></div>";
+      // echo '<button onmouseenter="LoadChatWidget()" id="intercom-button" class="intercom-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 32"><path d="M28 32s-4.714-1.855-8.527-3.34H3.437C1.54 28.66 0 27.026 0 25.013V3.644C0 1.633 1.54 0 3.437 0h21.125c1.898 0 3.437 1.632 3.437 3.645v18.404H28V32zm-4.139-11.982a.88.88 0 00-1.292-.105c-.03.026-3.015 2.681-8.57 2.681-5.486 0-8.517-2.636-8.571-2.684a.88.88 0 00-1.29.107 1.01 1.01 0 00-.219.708.992.992 0 00.318.664c.142.128 3.537 3.15 9.762 3.15 6.226 0 9.621-3.022 9.763-3.15a.992.992 0 00.317-.664 1.01 1.01 0 00-.218-.707z"></path></svg></button>';
     }
     add_action('wp_footer', 'insert_my_footer');
   }

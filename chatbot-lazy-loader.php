@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     Chatbot Lazy Loader
- * Plugin URI:      https://joeyfarruggio.com
+ * Plugin URI:      
  * Description:     Eliminate the negative impact chatbots hae on your page speed
  * Author:          Joey Farruggio
  * Author URI:      https://joeyfarruggio.com

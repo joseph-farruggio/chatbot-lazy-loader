@@ -13,6 +13,9 @@ if (chatIsLoaded === false) {
 function LoadChatWidget() {
   chatIsLoaded = true;
   
+  var button = document.getElementById('indemandly-button');
+  button.parentNode.removeChild(button);
+
   !(function (d, s, c) {
     s = d.createElement("script");
     s.src = "https://widget.indemand.ly/launcher.js";

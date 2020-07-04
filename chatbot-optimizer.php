@@ -20,13 +20,20 @@ add_action( 'carbon_fields_register_fields', 'crb_attach_theme_options' );
 function crb_attach_theme_options() {
   Container::make( 'theme_options', __( 'Chat Settings' ) )
       ->add_fields( array(
+          /**
+           * Provider Selectoin
+           */
           Field::make( 'select', 'chat_provider', __( 'Choose a chat provider' ) )
             ->set_options( array(
                 'drift' => 'Drift',
                 'intercom' => 'Intercom',
-                'messenger' => 'Messenger'
+                'messenger' => 'Messenger',
+                'indemandly' => "Indemandly"
             ) ),
           
+          /**
+           * Drift Key
+           */
           Field::make( 'text', 'drift_key', 'Drift Key' )->set_required( true )->set_conditional_logic( array(
             'relation' => 'AND', // Optional, defaults to "AND"
             array(
@@ -35,7 +42,10 @@ function crb_attach_theme_options() {
               'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
             )
           )),
-
+          
+          /**
+           * Intercom ID
+           */
           Field::make( 'text', 'intercom_id', 'Intercom ID' )->set_required( true )->set_conditional_logic( array(
             'relation' => 'AND', // Optional, defaults to "AND"
             array(
@@ -45,6 +55,9 @@ function crb_attach_theme_options() {
             )
           )),
 
+          /**
+           * Facebook Page ID
+           */
           Field::make( 'text', 'messenger_id', 'Facebook Page ID' )->set_required( true )->set_conditional_logic( array(
             'relation' => 'AND', // Optional, defaults to "AND"
             array(
@@ -53,8 +66,11 @@ function crb_attach_theme_options() {
               'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
             )
           )),
-          
-          Field::make( 'html', 'crb_information_text' )
+
+          /**
+           * Facebook instructions
+           */
+          Field::make( 'html', 'facebook' )
           ->set_html( '
             <h2 style="padding-left: 0;">Instructions</h2>
             <p>First you need to enable the Messenger chat plugin. From your Facebook page:</p> <ol><li>Go to Page Settings > Messaging</li><li>Click "Add Messenger to your website"</li><li>White list your domain, but don&apos;t worry about copying the JavaScript code</li></ol>
@@ -67,6 +83,36 @@ function crb_attach_theme_options() {
               'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
             )
           )),
+          
+          /**
+           * Indemandly instructions
+           */
+          Field::make( 'html', 'indemandly' )
+          ->set_html( '
+            <h2 style="padding-left: 0;">Instructions</h2>
+            <p>You will need your username assigned to you by Indemandly. You can find your username on the <a href="https://indemandly.com/business" target="_blank">business page</a> of your Indemandly account.</p> <p>The username will be prepended to ".indemand.ly".' )
+          ->set_conditional_logic( array(
+            'relation' => 'AND', // Optional, defaults to "AND"
+            array(
+              'field' => 'chat_provider',
+              'value' => 'indemandly', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+              'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+            )
+          )),
+
+          /**
+           * Indemandly User Name
+           */
+          Field::make( 'text', 'indemandly_username', 'Username' )->set_required( true )->set_conditional_logic( array(
+            'relation' => 'AND', // Optional, defaults to "AND"
+            array(
+              'field' => 'chat_provider',
+              'value' => 'indemandly', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+              'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+            )
+          ))
+          ->set_classes( 'indemandly-username' )
+          ->set_width( 50 ),
 
           Field::make( 'color', 'chat_button_color', 'Button Color' )->set_required( true )->set_conditional_logic( array(
             'relation' => 'OR', // Optional, defaults to "AND"
@@ -78,6 +124,11 @@ function crb_attach_theme_options() {
             array(
               'field' => 'chat_provider',
               'value' => 'intercom', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+              'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+            ),
+            array(
+              'field' => 'chat_provider',
+              'value' => 'indemandly', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
               'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
             )
           )),
@@ -149,4 +200,27 @@ if ( get_option('_chat_provider') === 'messenger' ) {
     }
     add_action('wp_footer', 'insert_my_footer');
   }
+}
+
+// Indemandly selected
+if ( get_option('_chat_provider') === 'indemandly' ) {
+  function indemandly_admin_script( $hook ) {
+    wp_enqueue_style( 'custom-carbon-fields', plugin_dir_url( __FILE__ ) . 'dist/css/admin.min.css');
+  }
+  add_action( 'admin_enqueue_scripts', 'indemandly_admin_script' );
+
+  function optimize_indemandly_enqueue_script() {  
+    wp_enqueue_style( 'custom-carbon-fields', plugin_dir_url( __FILE__ ) . 'dist/css/indemandly-button.min.css');
+    wp_enqueue_script( 'optimized_indemandly', plugin_dir_url( __FILE__ ) . 'dist/js/indemandly-init.min.js', array(), null, true);
+    wp_localize_script( 'optimized_indemandly', 'indemandly_settings', array(
+      'indemandly_username' => get_option('_indemandly_username'),
+      'button_color' => get_option('_chat_button_color'),
+    ) );
+  }
+  add_action('wp_enqueue_scripts', 'optimize_indemandly_enqueue_script');
+
+  function insert_my_footer() {
+    echo '<button onmouseenter="LoadChatWidget()" onClick="OpenChatWidget()" id="indemandly-button" class="indemandly-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></button>';
+  }
+  add_action('wp_footer', 'insert_my_footer');
 }

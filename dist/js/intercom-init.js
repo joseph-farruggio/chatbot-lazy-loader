@@ -1,6 +1,6 @@
 /*!
- * project-name v0.0.1
- * A description for your project.
+ * chatbot-optimizer v0.0.1
+ * Eliminate the impact of chatbots on your page speed
  * (c) 2020 YOUR NAME
  * MIT License
  * http://link-to-your-git-repo.com

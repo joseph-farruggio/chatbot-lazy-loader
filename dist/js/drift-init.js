@@ -49,8 +49,10 @@ function LoadChatWidget() {
   });
 
   drift.on('ready', (function(api, payload) {
-    var button = document.getElementById('drift-init');
-    button.parentNode.removeChild(button);
+    var button = document.getElementById('drift-button');
+    if (button) {
+      button.parentNode.removeChild(button);
+    }
   }));
 };
 

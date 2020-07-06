@@ -7,7 +7,7 @@
  */
 
 /* line 1, src/sass/indemandly-button.scss */
-#indemandly-button {
+.indemandly-button {
   position: fixed;
   z-index: 99;
   right: 16pt;
@@ -30,12 +30,12 @@
 }
 
 /* line 16, src/sass/indemandly-button.scss */
-#indemandly-button:focus {
+.indemandly-button:focus {
   outline: none;
 }
 
 /* line 20, src/sass/indemandly-button.scss */
-#indemandly-button svg {
+.indemandly-button svg {
   width: 32px;
   height: 32px;
   stroke: #fff;

@@ -34,8 +34,5 @@ if (chatIsLoaded === false) {
   setTimeout((function(){ 
     LoadChatWidget();
     chatIsLoaded = true;
-    var button = document.getElementById('messenger-button');
-    button.parentNode.removeChild(button);
-    FB.CustomerChat.showDialog();
   }), 5000);
 }

@@ -7,7 +7,7 @@
  */
 
 /* line 1, src/sass/drift-button.scss */
-.drift-init {
+#drift-button {
   position: fixed;
   z-index: 99;
   right: 36px;

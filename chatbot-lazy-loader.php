@@ -28,7 +28,8 @@ function cb_lazy_loader_attach_theme_options() {
             'drift' => 'Drift',
             'intercom' => 'Intercom',
             'messenger' => 'Messenger',
-            'indemandly' => "Indemandly"
+            'indemandly' => 'Indemandly',
+            'crisp' => 'Crisp'
       ) ),
       
       /**
@@ -119,6 +120,21 @@ function cb_lazy_loader_attach_theme_options() {
       ),
 
       /**
+       * Crisp Website ID
+       */
+      Field::make( 'text', 'cb_lazy_loader_crisp_website_id', 'Website ID' )
+        ->set_required( true )
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'crisp', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+        )
+      ),
+
+      /**
        * Enable placeholder button
        */
       Field::make( 'checkbox', 'cb_lazy_loader_show_button', __( 'Show placholder button' ) )
@@ -131,7 +147,8 @@ function cb_lazy_loader_attach_theme_options() {
               'value' => array(
                 'drift',
                 'intercom',
-                'indemandly'
+                'indemandly',
+                'crisp'
               ), // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
               'compare' => 'IN', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
             )
@@ -170,6 +187,12 @@ function cb_lazy_loader_crb_load() {
   require_once( plugin_dir_path( __FILE__ ) . 'vendor/autoload.php' );
   \Carbon_Fields\Carbon_Fields::boot();
 }
+
+// Admin specific CSS to customize Carbon Field form input
+function cb_lazy_loader_admin_script( $hook ) {
+  wp_enqueue_style( 'custom-carbon-fields', plugin_dir_url( __FILE__ ) . 'dist/css/admin.min.css');
+}
+add_action( 'admin_enqueue_scripts', 'cb_lazy_loader_admin_script' );
 
 // Drift selected
 if ( get_option('_cb_lazy_loader_chat_provider') === 'drift' ) {
@@ -280,8 +303,29 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'indemandly' ) {
   }
 }
 
-// Admin specific CSS to customize Carbon Field form input
-function cb_lazy_loader_admin_script( $hook ) {
-  wp_enqueue_style( 'custom-carbon-fields', plugin_dir_url( __FILE__ ) . 'dist/css/admin.min.css');
+// Crisp selected
+if ( get_option('_cb_lazy_loader_chat_provider') === 'crisp' ) {
+
+  // Ensure key is set
+  if ( get_option('_cb_lazy_loader_crisp_website_id') != null ) {
+
+    // Enqueue Drift specific CSS and JS
+    function cb_lazy_loader_enqueue_script() {   	
+      wp_enqueue_style( 'crisp-button', plugin_dir_url( __FILE__ ) . 'dist/css/crisp-button.min.css');
+  
+      wp_enqueue_script( 'optimized_crisp', plugin_dir_url( __FILE__ ) . 'dist/js/crisp-init.min.js', array(), null, true);
+      wp_localize_script( 'optimized_crisp', 'crisp_settings', array(
+        'crisp_id' => get_option('_cb_lazy_loader_crisp_website_id')
+      ) );
+    }
+    add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
+  
+    // Create placeholder button
+    if (get_option('_cb_lazy_loader_show_button') === "yes") {
+      function cb_lazy_loader_insert_button() {
+        echo '<button onmouseenter="LoadChatWidget()" onClick="OpenChatWidget()" id="crisp-button" class="crisp-button"><span></span></button>';
+      }
+      add_action('wp_footer', 'cb_lazy_loader_insert_button');
+    }
+  }
 }
-add_action( 'admin_enqueue_scripts', 'cb_lazy_loader_admin_script' );

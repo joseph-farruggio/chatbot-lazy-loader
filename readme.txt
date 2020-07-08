@@ -9,21 +9,22 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin eleminates the negative impact chatbots have on your website's page speed.
+This plugin eliminates the negative impact chatbots have on your website's page speed.
 
 == Description ==
 
-This plugin eleminates the negative impact chatbots have on your website's page speed. The way it does this is simple. It lazy loads the JavaScript required to load the chatbot widget.
+This plugin eliminates the negative impact chatbots have on your website's page speed. The way it does this is simple. It lazy loads the JavaScript required to load the chatbot widget.
 
 == Supported Chatbots ==
 *   Messenger
 *   Drift
 *   Intercom
 *   Indemandly
+*   Crisp
 
 == Installation ==
 
-Once the plugin is installed and activated, visit the "Chatbot Settings" page and select your chatbot provider. In most cases, the minimum you have to do is provide the unique ID or Key provided by the chatbot provider.
+Once the plugin is installed and activated, visit the "Chatbot Settings" page and select your chatbot provider. In most cases, the minimum you have to do is provide the unique ID or Key provided by the chatbot provider. Please make sure you are not loading the chatbot yourself. This plugin will load the chatbot code for you.
 
 == Frequently Asked Questions ==
 
@@ -39,13 +40,6 @@ In most cases, yes. If your website is loading a chatbot widget, it's likely neg
 
 It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allowing the page content to load more quickly.
 
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
 
 == Changelog ==
 

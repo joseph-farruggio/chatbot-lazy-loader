@@ -6,7 +6,7 @@
  * http://link-to-your-git-repo.com
  */
 
-document.documentElement.style.setProperty('--chat-button', indemandly_settings.button_color);
+// document.documentElement.style.setProperty('--chat-button', indemandly_settings.button_color);
 
 var chatIsLoaded = false;
 

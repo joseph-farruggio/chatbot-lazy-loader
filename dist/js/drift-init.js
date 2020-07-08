@@ -6,7 +6,7 @@
  * http://link-to-your-git-repo.com
  */
 
-document.documentElement.style.setProperty('--chat-button', drift_settings.button_color);
+// document.documentElement.style.setProperty('--chat-button', drift_settings.button_color);
 
 var chatIsLoaded = false;
 
@@ -43,9 +43,9 @@ i.parentNode.insertBefore(o, i);
 }
   drift.SNIPPET_VERSION = '0.3.1';
   drift.load(drift_settings.drift_key);
-  drift.config({
-    backgroundColor: drift_settings.button_color
-  });
+  // drift.config({
+  //   backgroundColor: drift_settings.button_color
+  // });
 
   drift.on('ready', (function(api, payload) {
     var button = document.getElementById('drift-button');

@@ -5,7 +5,7 @@ Tags: page speed, chatbot, lazy load
 Requires at least: 4.5
 Tested up to: 5.4.2
 Requires PHP: 5.6
-Stable tag: 1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,8 @@ This plugin eliminates the negative impact chatbots have on your website's page 
 == Description ==
 
 This plugin eliminates the negative impact chatbots have on your website's page speed. The way it does this is simple. It lazy loads the JavaScript required to load the chatbot widget.
+
+<a href="https://www.producthunt.com/posts/chatbot-lazy-loader?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-chatbot-lazy-loader" target="_blank">Upvote on Product Hunt</a>
 
 == Supported Chatbots ==
 *   Messenger
@@ -45,3 +47,7 @@ It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allow
 
 = 1.0 =
 * Initial release
+= 1.1 =
+* Small bug fix for Drift
+= 1.1.1 =
+* Added instructions for each chatbot provider

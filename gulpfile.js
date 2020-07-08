@@ -9,7 +9,7 @@ var settings = {
 	polyfills: true,
 	styles: true,
 	svgs: false,
-	images: false,
+	images: true,
 	copy: false,
 	reload: false
 };

@@ -6,7 +6,16 @@
  * http://link-to-your-git-repo.com
  */
 
-/* line 3, src/sass/admin.scss */
+/* line 1, src/sass/admin.scss */
+.drift-image {
+  width: 400px;
+  max-width: 100%;
+  display: block;
+  border: 1px solid #f4f4f4;
+  border-radius: 4px;
+}
+
+/* line 11, src/sass/admin.scss */
 .indemandly-username .cf-field__body {
   display: grid;
   grid-template-columns: 50% 120px;
@@ -15,7 +24,7 @@
           align-items: center;
 }
 
-/* line 8, src/sass/admin.scss */
+/* line 16, src/sass/admin.scss */
 .indemandly-username .cf-field__body:after {
   content: ".indemand.ly";
   background: #f4f4f4;
@@ -32,7 +41,7 @@
 }
 
 @media (min-width: 783px) {
-  /* line 8, src/sass/admin.scss */
+  /* line 16, src/sass/admin.scss */
   .indemandly-username .cf-field__body:after {
     font-size: 14px;
     padding: 0 8px;
@@ -40,7 +49,7 @@
   }
 }
 
-/* line 29, src/sass/admin.scss */
+/* line 37, src/sass/admin.scss */
 .indemandly-username input {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;

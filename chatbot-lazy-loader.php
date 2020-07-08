@@ -31,6 +31,23 @@ function cb_lazy_loader_attach_theme_options() {
             'indemandly' => 'Indemandly',
             'crisp' => 'Crisp'
       ) ),
+
+       /**
+       * Drift instructions
+       */
+      Field::make( 'html', 'drift_instructions' )
+        ->set_html( '
+          <h2 style="padding-left: 0;">Instructions</h2>
+          <p>You will need to get your Drift key. Once you are logged in visit: <a href="https://app.drift.com/settings2/widget" target="_blank">https://app.drift.com/settings2/widget</a></p><ol><li>Click "Install" and then click "JavaScript"</li><li>In the JavaScript box, scroll to the bottom and copy the text inside drift.load("XXXXXX"); without the quotes.</li></ol>
+          <img class="drift-image" src="https://ucba19d6745105a7360acbfb48da.dl.dropboxusercontent.com/cd/0/inline/A7FdyCB_EdfaDP5dAzibf8bvwfG1fC9E6T39n7NtrG66ftHoqf_Gp_gpkbKFYCO8B7GCBtABKai75WFuU-gsjnxNb5PJunFSTbaCVuGyISkINGann3Nygm82NOIlTfDxkNg/file#">')
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'drift', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+      )),
       
       /**
        * Drift Key

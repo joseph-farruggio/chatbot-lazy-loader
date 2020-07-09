@@ -23,6 +23,7 @@ This plugin eliminates the negative impact chatbots have on your website's page 
 *   Intercom
 *   Indemandly
 *   Crisp
+*   Joonbot
 
 == Installation ==
 

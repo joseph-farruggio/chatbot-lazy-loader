@@ -42,6 +42,11 @@ In most cases, yes. If your website is loading a chatbot widget, it's likely neg
 
 It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allowing the page content to load more quickly.
 
+== Screenshots ==
+ 
+1. Eliminate page speed issues caused by chatbots.
+2. Lazy loading chatbots protects your page speed.
+3. Using this plugin is as simple as adding the unique ID or Key provided by your chatbot provider.
 
 == Changelog ==
 

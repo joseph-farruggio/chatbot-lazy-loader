@@ -24,12 +24,14 @@ function cb_lazy_loader_attach_theme_options() {
        * Provider Selectoin
        */
       Field::make( 'select', 'cb_lazy_loader_chat_provider', __( 'Choose a chatbot provider' ) )
+        ->set_help_text( 'Lazy load this chatbot by delaying it 5 seconds' )
         ->set_options( array(
             'drift' => 'Drift',
             'intercom' => 'Intercom',
             'messenger' => 'Messenger',
             'indemandly' => 'Indemandly',
-            'crisp' => 'Crisp'
+            'crisp' => 'Crisp',
+            'joonbot' => 'Joonbot'
       ) ),
 
        /**
@@ -173,15 +175,33 @@ function cb_lazy_loader_attach_theme_options() {
       )),
 
       /**
-       * Crisp Website ID
+       * Intercom instructions
        */
-      Field::make( 'text', 'cb_lazy_loader_crisp_website_id', 'Website ID' )
+      Field::make( 'html', 'joonbot_instructions' )
+        ->set_html( '
+          <h2 style="padding-left: 0;">Instructions</h2>
+          <p>You will need to get your Joonbot Widget ID. The way to find your Widget ID is to visit your bot list in Joonbot and select the bot you want to lazy load. Click the "Configure" tab and look in the JavaScript snippet. You want to copy the value after "JOONBOT_WIDGET_ID" without the qoutes.</p>
+          <p>So for this example account, if we check the URL we can see that the Widget ID is f231d5795480-429c-db63-b290-6d385acb.</p>
+          <img class="drift-image" src="'. plugin_dir_url( __FILE__ ) . 'dist/images/joonbot.png">')
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'joonbot', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+      )),
+
+      /**
+       * Joonbot Widget ID
+       */
+      Field::make( 'text', 'cb_lazy_loader_joonbot_widget_id', 'Widget ID' )
         ->set_required( true )
         ->set_conditional_logic( array(
           'relation' => 'AND', // Optional, defaults to "AND"
           array(
             'field' => 'cb_lazy_loader_chat_provider',
-            'value' => 'crisp', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'value' => 'joonbot', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
             'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
           )
         )
@@ -392,5 +412,22 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'crisp' ) {
     //   }
     //   add_action('wp_footer', 'cb_lazy_loader_insert_button');
     // }
+  }
+}
+
+// Crisp selected
+if ( get_option('_cb_lazy_loader_chat_provider') === 'joonbot' ) {
+
+  // Ensure key is set
+  if ( get_option('_cb_lazy_loader_joonbot_widget_id') != null ) {
+
+    // Enqueue Drift specific CSS and JS
+    function cb_lazy_loader_enqueue_script() {   	
+      wp_enqueue_script( 'optimized_joonbot', plugin_dir_url( __FILE__ ) . 'dist/js/joonbot-init.min.js', array(), null, true);
+      wp_localize_script( 'optimized_joonbot', 'joonbot_settings', array(
+        'joonbot_id' => get_option('_cb_lazy_loader_joonbot_widget_id')
+      ) );
+    }
+    add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
   }
 }

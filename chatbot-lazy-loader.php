@@ -28,13 +28,14 @@ function cb_lazy_loader_attach_theme_options() {
         ->set_options( array(
             'drift' => 'Drift',
             'intercom' => 'Intercom',
+            'hubspot' => 'Hubspot',
             'messenger' => 'Messenger',
             'indemandly' => 'Indemandly',
             'crisp' => 'Crisp',
             'joonbot' => 'Joonbot'
       ) ),
 
-       /**
+      /**
        * Drift instructions
        */
       Field::make( 'html', 'drift_instructions' )
@@ -89,6 +90,38 @@ function cb_lazy_loader_attach_theme_options() {
         array(
           'field' => 'cb_lazy_loader_chat_provider',
           'value' => 'intercom', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+          'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        )
+      )),
+
+       /**
+       * Hubspot instructions
+       */
+      Field::make( 'html', 'hubspot_instructions' )
+        ->set_html( '
+          <h2 style="padding-left: 0;">Instructions</h2>
+          <p>You will need to get your Hubspot ID. The easiest way to find your Hubspot ID is to check the URL of most pages in Hubspot.</p>
+          <p>For example, visit <a href="https://app.hubspot.com/chatflows/" target="_blank">https://app.hubspot.com/chatflows/</a>. You want the code that comes immeadiatly after chatflows/ in the URL.</p>
+          <p>So for this example account, if we check the URL we can see that the Hubspot ID is 12345678.</p>
+          <img class="drift-image" src="'. plugin_dir_url( __FILE__ ) . 'dist/images/hubspot.png">')
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'hubspot', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+      )),
+
+      
+      /**
+       * Hubspot Key
+       */
+      Field::make( 'text', 'cb_lazy_loader_hubspot_id', 'Hubspot ID' )->set_required( true )->set_conditional_logic( array(
+        'relation' => 'AND', // Optional, defaults to "AND"
+        array(
+          'field' => 'cb_lazy_loader_chat_provider',
+          'value' => 'hubspot', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
           'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
         )
       )),
@@ -330,6 +363,23 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'intercom' ) {
   }
 }
 
+// Hubspot selected
+if ( get_option('_cb_lazy_loader_chat_provider') === 'hubspot' ) {
+
+  // // Ensure key is set
+  // if ( get_option('_cb_lazy_loader_hubspot_id') != null ) {
+
+  //   // Enqueue Drift specific CSS and JS
+  //   function cb_lazy_loader_enqueue_script() {   	
+  //     wp_enqueue_script( 'optimized_hubspot', plugin_dir_url( __FILE__ ) . 'dist/js/hubspot-init.min.js', array(), null, true);
+  //     wp_localize_script( 'optimized_hubspot', 'hubspot_settings', array(
+  //       'hubspot_id' => get_option('_cb_lazy_loader_hubspot_id')
+  //     ) );
+  //   }
+  //   add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
+  // }
+}
+
 // Messenger selected
 if ( get_option('_cb_lazy_loader_chat_provider') === 'messenger' ) {
 
@@ -415,7 +465,7 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'crisp' ) {
   }
 }
 
-// Crisp selected
+// Joonbot selected
 if ( get_option('_cb_lazy_loader_chat_provider') === 'joonbot' ) {
 
   // Ensure key is set

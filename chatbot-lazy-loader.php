@@ -366,18 +366,18 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'intercom' ) {
 // Hubspot selected
 if ( get_option('_cb_lazy_loader_chat_provider') === 'hubspot' ) {
 
-  // // Ensure key is set
-  // if ( get_option('_cb_lazy_loader_hubspot_id') != null ) {
+  // Ensure key is set
+  if ( get_option('_cb_lazy_loader_hubspot_id') != null ) {
 
-  //   // Enqueue Drift specific CSS and JS
-  //   function cb_lazy_loader_enqueue_script() {   	
-  //     wp_enqueue_script( 'optimized_hubspot', plugin_dir_url( __FILE__ ) . 'dist/js/hubspot-init.min.js', array(), null, true);
-  //     wp_localize_script( 'optimized_hubspot', 'hubspot_settings', array(
-  //       'hubspot_id' => get_option('_cb_lazy_loader_hubspot_id')
-  //     ) );
-  //   }
-  //   add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
-  // }
+    // Enqueue Drift specific CSS and JS
+    function cb_lazy_loader_enqueue_script() {   	
+      wp_enqueue_script( 'optimized_hubspot', plugin_dir_url( __FILE__ ) . 'dist/js/hubspot-init.min.js', array(), null, true);
+      wp_localize_script( 'optimized_hubspot', 'hubspot_settings', array(
+        'hubspot_id' => get_option('_cb_lazy_loader_hubspot_id')
+      ) );
+    }
+    add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
+  }
 }
 
 // Messenger selected

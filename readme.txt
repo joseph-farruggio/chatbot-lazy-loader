@@ -24,6 +24,7 @@ This plugin eliminates the negative impact chatbots have on your website's page 
 *   Indemandly
 *   Crisp
 *   Joonbot
+*   Hubspot
 
 == Installation ==
 

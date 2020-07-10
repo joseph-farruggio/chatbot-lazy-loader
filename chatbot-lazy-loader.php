@@ -7,7 +7,7 @@
  * Author URI:      https://joeyfarruggio.com
  * Text Domain:     chatbot-lazy-loader
  * Domain Path:     /languages
- * Version:         1.1.1
+ * Version:         1.1.2
  *
  * @package         Chatbot_Lazy_Loader
  */

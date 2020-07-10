@@ -58,3 +58,5 @@ It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allow
 * Small bug fix for Drift
 = 1.1.1 =
 * Added instructions for each chatbot provider
+= 1.1.2 =
+* Added Hubspot and Joonbot as providers

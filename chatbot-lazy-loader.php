@@ -7,7 +7,7 @@
  * Author URI:      https://joeyfarruggio.com
  * Text Domain:     chatbot-lazy-loader
  * Domain Path:     /languages
- * Version:         1.1.2
+ * Version:         1.1.3
  *
  * @package         Chatbot_Lazy_Loader
  */
@@ -32,7 +32,8 @@ function cb_lazy_loader_attach_theme_options() {
             'messenger' => 'Messenger',
             'indemandly' => 'Indemandly',
             'crisp' => 'Crisp',
-            'joonbot' => 'Joonbot'
+            'joonbot' => 'Joonbot',
+            'tawk' => 'Tawk.to'
       ) ),
 
       /**
@@ -94,7 +95,7 @@ function cb_lazy_loader_attach_theme_options() {
         )
       )),
 
-       /**
+      /**
        * Hubspot instructions
        */
       Field::make( 'html', 'hubspot_instructions' )
@@ -241,50 +242,83 @@ function cb_lazy_loader_attach_theme_options() {
       ),
 
       /**
+       * Tawk.to instructions
+       */
+      Field::make( 'html', 'tawk_instructions' )
+        ->set_html( '
+          <h2 style="padding-left: 0;">Instructions</h2>
+          <p>You will need to get your Tawk.to ID. The easiest way to find your Tawk.to ID is to check the URL of most pages in Tawk.to.</p>
+          <p>For example, visit <a href="https://dashboard.tawk.to/" target="_blank">https://dashboard.tawk.to/</a>. You want the code that comes immeadiatly after dashboard/ in the URL.</p>
+          <p>So for this example account, if we check the URL we can see that the Tawk.to ID is 123456789.</p>
+          <img class="drift-image" src="'. plugin_dir_url( __FILE__ ) . 'dist/images/tawk.png">')
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'tawk', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+      )),
+
+      
+      /**
+       * Tawk.to Key
+       */
+      Field::make( 'text', 'cb_lazy_loader_tawk_id', 'Tawk.to ID' )->set_required( true )->set_conditional_logic( array(
+        'relation' => 'AND', // Optional, defaults to "AND"
+        array(
+          'field' => 'cb_lazy_loader_chat_provider',
+          'value' => 'tawk', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+          'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        )
+      )),
+
+      /**
        * Enable placeholder button
        */
-      // Field::make( 'checkbox', 'cb_lazy_loader_show_button', __( 'Show placholder button' ) )
-      //   ->set_help_text( 'Show a placeholder button until the chatbot button is loaded.' )
-      //   ->set_conditional_logic( 
-      //     array(
-      //       'relation' => 'AND', // Optional, defaults to "AND"
-      //       array(
-      //         'field' => 'cb_lazy_loader_chat_provider',
-      //         'value' => array(
-      //           'drift',
-      //           'intercom',
-      //           'indemandly',
-      //           'crisp'
-      //         ), // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
-      //         'compare' => 'IN', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
-      //       )
-      //     )
-      // ),
+        // Field::make( 'checkbox', 'cb_lazy_loader_show_button', __( 'Show placholder button' ) )
+        //   ->set_help_text( 'Show a placeholder button until the chatbot button is loaded.' )
+        //   ->set_conditional_logic( 
+        //     array(
+        //       'relation' => 'AND', // Optional, defaults to "AND"
+        //       array(
+        //         'field' => 'cb_lazy_loader_chat_provider',
+        //         'value' => array(
+        //           'drift',
+        //           'intercom',
+        //           'indemandly',
+        //           'crisp'
+        //         ), // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+        //         'compare' => 'IN', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        //       )
+        //     )
+        // ),
+      
       
       /**
        * Set placeholder button's color
        */
-      // Field::make( 'color', 'cb_lazy_loader_button_color', 'Button Color' )
-      //   ->set_required( true )
-      //   ->set_conditional_logic( 
-      //   array(
-      //     'relation' => 'AND', // Optional, defaults to "AND"
-      //     array(
-      //       'field' => 'cb_lazy_loader_show_button',
-      //       'value' => true, // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
-      //       'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
-      //     ),
-      //     array(
-      //       'field' => 'cb_lazy_loader_chat_provider',
-      //       'value' => array(
-      //         'drift',
-      //         'intercom',
-      //         'indemandly'
-      //       ), // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
-      //       'compare' => 'IN', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
-      //     )
-      //   )
-      // ),
+        // Field::make( 'color', 'cb_lazy_loader_button_color', 'Button Color' )
+        //   ->set_required( true )
+        //   ->set_conditional_logic( 
+        //   array(
+        //     'relation' => 'AND', // Optional, defaults to "AND"
+        //     array(
+        //       'field' => 'cb_lazy_loader_show_button',
+        //       'value' => true, // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+        //       'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        //     ),
+        //     array(
+        //       'field' => 'cb_lazy_loader_chat_provider',
+        //       'value' => array(
+        //         'drift',
+        //         'intercom',
+        //         'indemandly'
+        //       ), // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+        //       'compare' => 'IN', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        //     )
+        //   )
+        // ),
   ) );
 }
 
@@ -476,6 +510,23 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'joonbot' ) {
       wp_enqueue_script( 'optimized_joonbot', plugin_dir_url( __FILE__ ) . 'dist/js/joonbot-init.min.js', array(), null, true);
       wp_localize_script( 'optimized_joonbot', 'joonbot_settings', array(
         'joonbot_id' => get_option('_cb_lazy_loader_joonbot_widget_id')
+      ) );
+    }
+    add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
+  }
+}
+
+// Tawk.to selected
+if ( get_option('_cb_lazy_loader_chat_provider') === 'tawk' ) {
+
+  // Ensure key is set
+  if ( get_option('_cb_lazy_loader_tawk_id') != null ) {
+
+    // Enqueue Drift specific CSS and JS
+    function cb_lazy_loader_enqueue_script() {   	
+      wp_enqueue_script( 'optimized_tawk', plugin_dir_url( __FILE__ ) . 'dist/js/tawk-init.min.js', array(), null, true);
+      wp_localize_script( 'optimized_tawk', 'tawk_settings', array(
+        'tawk_id' => get_option('_cb_lazy_loader_tawk_id')
       ) );
     }
     add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');

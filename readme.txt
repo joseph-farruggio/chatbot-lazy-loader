@@ -25,6 +25,7 @@ This plugin eliminates the negative impact chatbots have on your website's page 
 *   Crisp
 *   Joonbot
 *   Hubspot
+*   Tawk.to
 
 == Installation ==
 
@@ -60,3 +61,5 @@ It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allow
 * Added instructions for each chatbot provider
 = 1.1.2 =
 * Added Hubspot and Joonbot as providers
+= 1.1.3 =
+* Added Tawk.to as a provider

@@ -33,7 +33,8 @@ function cb_lazy_loader_attach_theme_options() {
             'indemandly' => 'Indemandly',
             'crisp' => 'Crisp',
             'joonbot' => 'Joonbot',
-            'tawk' => 'Tawk.to'
+            'tawk' => 'Tawk.to',
+            'intaker' => 'Intaker',
       ) ),
 
       /**
@@ -269,6 +270,38 @@ function cb_lazy_loader_attach_theme_options() {
         array(
           'field' => 'cb_lazy_loader_chat_provider',
           'value' => 'tawk', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+          'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        )
+      )),
+
+      /**
+       * Intaker instructions
+       */
+      Field::make( 'html', 'intaker_instructions' )
+        ->set_html( '
+          <h2 style="padding-left: 0;">Instructions</h2>
+          <p>You will need to get your Intaker ID. The only way to find your Intaker ID is to check the code snippet that Intaker emails.</p>
+          <p>For example, take the following code snippet:</p>
+          <code><script> (function(w,d,s,l,i){w[l]=i;var f=d.getElementsByTagName(s)[0], j=d.createElement(s);j.async=true;j.src= "https://intaker.co/dist/chat-widget.min.js";f.parentNode.insertBefore(j,f); })(window,document,"script","SU5UQUtFUl9DSEFUX1VSTA==","abcd123456=="); </script></code>
+          <p>Your ID would be <b>abcd123456==</b></p>')
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'intaker', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+      )),
+
+      
+      /**
+       * Intaker Key
+       */
+      Field::make( 'text', 'cb_lazy_loader_intaker_id', 'Intaker ID' )->set_required( true )->set_conditional_logic( array(
+        'relation' => 'AND', // Optional, defaults to "AND"
+        array(
+          'field' => 'cb_lazy_loader_chat_provider',
+          'value' => 'intaker', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
           'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
         )
       )),
@@ -527,6 +560,23 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'tawk' ) {
       wp_enqueue_script( 'optimized_tawk', plugin_dir_url( __FILE__ ) . 'dist/js/tawk-init.min.js', array(), null, true);
       wp_localize_script( 'optimized_tawk', 'tawk_settings', array(
         'tawk_id' => get_option('_cb_lazy_loader_tawk_id')
+      ) );
+    }
+    add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
+  }
+}
+
+// Intaker selected
+if ( get_option('_cb_lazy_loader_chat_provider') === 'intaker' ) {
+
+  // Ensure key is set
+  if ( get_option('_cb_lazy_loader_intaker_id') != null ) {
+
+    // Enqueue Drift specific CSS and JS
+    function cb_lazy_loader_enqueue_script() {   	
+      wp_enqueue_script( 'intaker', plugin_dir_url( __FILE__ ) . 'dist/js/intaker-init.min.js', array(), null, true);
+      wp_localize_script( 'intaker', 'intaker_settings', array(
+        'intaker_id' => get_option('_cb_lazy_loader_intaker_id')
       ) );
     }
     add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');

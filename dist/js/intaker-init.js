@@ -18,15 +18,5 @@ if (chatIsLoaded === false) {
 
 function LoadChatWidget() {
   chatIsLoaded = true;
-
-  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-  (function(){
-  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-  s1.async=true;
-  s1.src='https://embed.tawk.to/'+tawk_settings.tawk_id+'/default';
-  s1.charset='UTF-8';
-  s1.setAttribute('crossorigin','*');
-  s0.parentNode.insertBefore(s1,s0);
-  })();
-
+  (function(w,d,s,l,i){w[l]=i;var f=d.getElementsByTagName(s)[0], j=d.createElement(s);j.async=true;j.src= 'https://intaker.co/dist/chat-widget.min.js';f.parentNode.insertBefore(j,f); })(window,document,'script','SU5UQUtFUl9DSEFUX1VSTA==', intaker_settings.intaker_id);
 };

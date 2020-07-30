@@ -282,7 +282,7 @@ function cb_lazy_loader_attach_theme_options() {
           <h2 style="padding-left: 0;">Instructions</h2>
           <p>You will need to get your Intaker ID. The only way to find your Intaker ID is to check the code snippet that Intaker emails.</p>
           <p>For example, take the following code snippet:</p>
-          <code><script> (function(w,d,s,l,i){w[l]=i;var f=d.getElementsByTagName(s)[0], j=d.createElement(s);j.async=true;j.src= "https://intaker.co/dist/chat-widget.min.js";f.parentNode.insertBefore(j,f); })(window,document,"script","SU5UQUtFUl9DSEFUX1VSTA==","abcd123456=="); </script></code>
+          <div style="width: 500px; max-width: 100%; background: #f4f4f4; padding: 6px; border-radius: 4px;">(function(w,d,s,l,i){w[l]=i;var f=d.getElementsByTagName(s)[0], j=d.createElement(s);j.async=true;j.src= "https://intaker.co/dist/chat-widget.min.js";f.parentNode.insertBefore(j,f); })(window,document,"script","SU5UQUtFUl9DSEFUX1VSTA==","abcd123456==");</div>
           <p>Your ID would be <b>abcd123456==</b></p>')
         ->set_conditional_logic( array(
           'relation' => 'AND', // Optional, defaults to "AND"

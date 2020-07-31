@@ -22,9 +22,9 @@ fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 };
 
-function OpenChatWidget() {
-  FB.Event.subscribe('customerchat.load', FB.CustomerChat.showDialog());
-}
+// function OpenChatWidget() {
+//   FB.Event.subscribe('customerchat.load', FB.CustomerChat.showDialog());
+// }
 
 
 var chatIsLoaded = false;

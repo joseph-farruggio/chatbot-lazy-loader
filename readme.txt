@@ -27,6 +27,7 @@ This plugin eliminates the negative impact chatbots have on your website's page 
 *   Hubspot
 *   Tawk.to
 *   Intaker
+*   Frogged
 
 == Installation ==
 

@@ -624,7 +624,7 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'frogged' ) {
 
     // Enqueue Drift specific CSS and JS
     function cb_lazy_loader_enqueue_script() {   	
-      wp_enqueue_script( 'frogged', plugin_dir_url( __FILE__ ) . 'dist/js/frogged-init.js', array(), null, true);
+      wp_enqueue_script( 'frogged', plugin_dir_url( __FILE__ ) . 'dist/js/frogged-init.min.js', array(), null, true);
       wp_localize_script( 'frogged', 'frogged_settings', array(
         'frogged_id' => get_option('_cb_lazy_loader_frogged_id')
       ) );

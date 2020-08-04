@@ -7,7 +7,7 @@
  * Author URI:      https://joeyfarruggio.com
  * Text Domain:     chatbot-lazy-loader
  * Domain Path:     /languages
- * Version:         1.1.3
+ * Version:         1.1.4
  *
  * @package         Chatbot_Lazy_Loader
  */
@@ -35,6 +35,7 @@ function cb_lazy_loader_attach_theme_options() {
             'joonbot' => 'Joonbot',
             'tawk' => 'Tawk.to',
             'intaker' => 'Intaker',
+            'frogged' => 'Frogged',
       ) ),
 
       /**
@@ -302,6 +303,38 @@ function cb_lazy_loader_attach_theme_options() {
         array(
           'field' => 'cb_lazy_loader_chat_provider',
           'value' => 'intaker', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+          'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+        )
+      )),
+
+      /**
+       * Frogged instructions
+       */
+      Field::make( 'html', 'frogged_instructions' )
+        ->set_html( '
+          <h2 style="padding-left: 0;">Instructions</h2>
+          <p>You will need to get your Frogged ID. The easiest way to find your Frogged ID is to check the URL when you are logged into Frogged.</p>
+          <p>For example, visit <a href="https://app.froged.com/" target="_blank">https://app.froged.com/</a>. You want the text at the end of the URL.</p>
+          <p>So for this example account, if we check the URL we can see that the Frogged ID is 123456789.</p>
+          <img class="drift-image" src="'. plugin_dir_url( __FILE__ ) . 'dist/images/frogged.png">')
+        ->set_conditional_logic( array(
+          'relation' => 'AND', // Optional, defaults to "AND"
+          array(
+            'field' => 'cb_lazy_loader_chat_provider',
+            'value' => 'frogged', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
+            'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
+          )
+      )),
+
+      
+      /**
+       * Frogged Key
+       */
+      Field::make( 'text', 'cb_lazy_loader_frogged_id', 'InFroggedtaker ID' )->set_required( true )->set_conditional_logic( array(
+        'relation' => 'AND', // Optional, defaults to "AND"
+        array(
+          'field' => 'cb_lazy_loader_chat_provider',
+          'value' => 'frogged', // Optional, defaults to "". Should be an array if "IN" or "NOT IN" operators are used.
           'compare' => '=', // Optional, defaults to "=". Available operators: =, <, >, <=, >=, IN, NOT IN
         )
       )),
@@ -577,6 +610,23 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'intaker' ) {
       wp_enqueue_script( 'intaker', plugin_dir_url( __FILE__ ) . 'dist/js/intaker-init.min.js', array(), null, true);
       wp_localize_script( 'intaker', 'intaker_settings', array(
         'intaker_id' => get_option('_cb_lazy_loader_intaker_id')
+      ) );
+    }
+    add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
+  }
+}
+
+// Frogged selected
+if ( get_option('_cb_lazy_loader_chat_provider') === 'frogged' ) {
+
+  // Ensure key is set
+  if ( get_option('_cb_lazy_loader_frogged_id') != null ) {
+
+    // Enqueue Drift specific CSS and JS
+    function cb_lazy_loader_enqueue_script() {   	
+      wp_enqueue_script( 'frogged', plugin_dir_url( __FILE__ ) . 'dist/js/frogged-init.js', array(), null, true);
+      wp_localize_script( 'frogged', 'frogged_settings', array(
+        'f' => get_option('_cb_lazy_loader_frogged_id')
       ) );
     }
     add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');

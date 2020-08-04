@@ -26,6 +26,7 @@ This plugin eliminates the negative impact chatbots have on your website's page 
 *   Joonbot
 *   Hubspot
 *   Tawk.to
+*   Intaker
 
 == Installation ==
 
@@ -63,3 +64,5 @@ It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allow
 * Added Hubspot and Joonbot as providers
 = 1.1.3 =
 * Added Tawk.to as a provider
+= 1.1.3 =
+* Added Intaker as a provider

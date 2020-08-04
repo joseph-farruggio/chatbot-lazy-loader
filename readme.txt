@@ -64,5 +64,7 @@ It's pretty simple really. This plugin lazy loads the chatbot's JavaScript allow
 * Added Hubspot and Joonbot as providers
 = 1.1.3 =
 * Added Tawk.to as a provider
-= 1.1.3 =
+= 1.1.4 =
 * Added Intaker as a provider
+= 1.1.5 =
+* Added Frogged as a provider

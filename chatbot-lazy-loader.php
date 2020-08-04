@@ -626,7 +626,7 @@ if ( get_option('_cb_lazy_loader_chat_provider') === 'frogged' ) {
     function cb_lazy_loader_enqueue_script() {   	
       wp_enqueue_script( 'frogged', plugin_dir_url( __FILE__ ) . 'dist/js/frogged-init.js', array(), null, true);
       wp_localize_script( 'frogged', 'frogged_settings', array(
-        'f' => get_option('_cb_lazy_loader_frogged_id')
+        'frogged_id' => get_option('_cb_lazy_loader_frogged_id')
       ) );
     }
     add_action('wp_enqueue_scripts', 'cb_lazy_loader_enqueue_script');
